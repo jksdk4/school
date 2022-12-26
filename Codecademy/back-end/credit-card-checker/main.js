@@ -66,13 +66,44 @@ const validateCred = (arr) => {
         return true;
     }
     return false;
-};
+}
 
-// returns a nested array of invalid cards from the batch
 const findInvalidCards = arr => {
     for (let i = 0; i < arr.length - 1; i++) {
-        return arr.filter(card => !validateCred(card));
+      return arr.filter(card => !validateCred(card));
     }
 }
 
-console.log(findInvalidCards(batch));
+// returns a nested array of invalid cards from the batch, ids company
+const idInvalidCardCompanies = invalidBatch => {
+    const companies = [];
+    for (let i = 0; i < invalidBatch.length; i++) {
+      switch (invalidBatch[i][0]) {
+        case 3:
+          if (companies.indexOf('Amex') === -1) {
+            companies.push('Amex');
+          }
+          break;
+        case 4:
+          if (companies.indexOf('Visa') === -1) {
+            companies.push('Visa');
+          }
+          break;
+        case 5:
+          if (companies.indexOf('Mastercard') === -1) {
+            companies.push('Mastercard');
+          }
+          break;
+        case 6:
+          if (companies.indexOf('Discover') === -1) {
+            companies.push('Discover');
+          }
+          break;
+        default:
+          console.log('Company not found');
+      }
+    }
+    return companies;
+}
+
+console.log(idInvalidCardCompanies(batch));
