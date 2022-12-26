@@ -39,3 +39,40 @@ const batch = [
 ];
 
 // Add your functions below:
+
+const validateCred = (arr) => {
+    // copy array in backwards to loop forward and not mutate original array
+    let testArr = [];
+    for (let i = arr.length - 1; i >= 0; i--) {
+        testArr.push(arr[i]);
+    }
+
+    // then double every other number starting from the penultimate number
+    // i.e. do not include the tail number of a card
+    for (let i = 1; i < testArr.length; i += 2) {
+        testArr[i] *= 2;
+        // if doubled value is over 9, subtract 9
+        if (testArr[i] > 9) {
+        testArr[i] -= 9;
+        }
+    }
+    
+    // sum the values; if not divisible by ten, card is invalid
+    let sum = testArr.reduce(
+        (accumulator, currentValue) => accumulator + currentValue
+    );
+
+    if (sum % 10 === 0) {
+        return true;
+    }
+    return false;
+};
+
+// returns a nested array of invalid cards from the batch
+const findInvalidCards = arr => {
+    for (let i = 0; i < arr.length - 1; i++) {
+        return arr.filter(card => !validateCred(card));
+    }
+}
+
+console.log(findInvalidCards(batch));
